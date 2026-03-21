@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Luis Gaxiola | Consultor de Marketing Estratégico",
-  description: "Ayudo a empresas a dominar su mercado con estrategias de marketing agresivas y resultados tangibles.",
+  title: "Luis Gaxiola | Entrepreneur & Media Buyer",
+  description: "Builder de Chawoora y Craiber. +$45M generados en ventas. Estrategias de marketing que no publico en redes — solo en mi newsletter.",
 };
 
 export default function RootLayout({
@@ -23,10 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable}`}
-      >
+    <html lang="es">
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <Navbar />
         {children}
         <footer className="py-8 border-t border-gray-100 mt-auto">
           <div className="container mx-auto px-4 text-center text-sm text-gray-500">
