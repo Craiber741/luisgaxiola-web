@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import SiteWrapper from "./components/SiteWrapper";
+import { MetaPixel } from "./components/MetaPixel";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,14 +27,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Navbar />
-        {children}
-        <footer className="py-8 border-t border-gray-100 mt-auto">
-          <div className="container mx-auto px-4 text-center text-sm text-gray-500">
-            <p>&copy; {new Date().getFullYear()} Luis Gaxiola. Todos los derechos reservados.</p>
-            <p className="mt-2 text-xs">Diseñado para la dominación del mercado.</p>
-          </div>
-        </footer>
+        <MetaPixel />
+        <SiteWrapper>
+          {children}
+        </SiteWrapper>
       </body>
     </html>
   );
