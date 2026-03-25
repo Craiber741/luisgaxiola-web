@@ -60,35 +60,29 @@ const IMAGES = [
   },
 ];
 
-async function downloadImage(url, filePath) {
-  const res = await fetch(url);
-  const buffer = await res.arrayBuffer();
-  writeFileSync(filePath, Buffer.from(buffer));
-}
-
 async function main() {
-  console.log(`\n🎨 Generando ${IMAGES.length} imágenes con DALL-E 3...\n`);
+  console.log(`\n🎨 Generando ${IMAGES.length} imágenes con gpt-image-1...\n`);
 
   for (const img of IMAGES) {
     process.stdout.write(`  ⏳ ${img.file}...`);
     try {
       const response = await client.images.generate({
-        model: "dall-e-3",
+        model: "gpt-image-1",
         prompt: img.prompt,
         size: img.size,
-        quality: "hd",
+        quality: "high",
         n: 1,
       });
 
-      const url = response.data[0].url;
+      // gpt-image-1 devuelve base64
+      const b64 = response.data[0].b64_json;
       const filePath = join(OUTPUT_DIR, img.file);
-      await downloadImage(url, filePath);
+      writeFileSync(filePath, Buffer.from(b64, "base64"));
       console.log(` ✅`);
     } catch (err) {
       console.log(` ❌ Error: ${err.message}`);
     }
 
-    // Pequeña pausa para no saturar la API
     await new Promise((r) => setTimeout(r, 1000));
   }
 
