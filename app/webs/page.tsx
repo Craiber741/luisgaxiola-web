@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Geist } from "next/font/google";
-import { ArrowRight, Check, Scissors, UtensilsCrossed, Wrench, Building2, ChevronLeft, AlertTriangle, ExternalLink } from "lucide-react";
+import { ArrowRight, Check, Scissors, UtensilsCrossed, Wrench, ChevronLeft, AlertTriangle, ExternalLink, Eye } from "lucide-react";
 import Link from "next/link";
 import { trackEvent } from "../components/MetaPixel";
 
@@ -24,43 +24,29 @@ interface LeadData {
   ciudad: string;
 }
 
-const SITES = [
-  {
-    available: true,
-    tipo: "salon",
-    badge: "DISPONIBLE",
-    label: "Salón de Belleza",
-    icon: Scissors,
-    desc: "Hero editorial, servicios con precios, galería, testimoniales, widget de WhatsApp y agenda de citas.",
-    href: "/web2",
-  },
-  {
-    available: true,
-    tipo: "restaurante",
-    badge: "DISPONIBLE",
-    label: "Restaurante / Café",
-    icon: UtensilsCrossed,
-    desc: "Menú de temporada, galería de platillos, reservaciones por WhatsApp, horarios y ubicación.",
-    href: "/demos/restaurante",
-  },
-  {
-    available: true,
-    tipo: "servicios",
-    badge: "DISPONIBLE",
-    label: "Plomería / Servicios",
-    icon: Wrench,
-    desc: "Tira de emergencia 24/7, servicios con CTA directo, galería de trabajos y reseñas de clientes.",
-    href: "/demos/plomero",
-  },
-  {
-    available: false,
-    tipo: "otro",
-    badge: "PRÓXIMAMENTE",
-    label: "Más industrias",
-    icon: Building2,
-    desc: "Clínicas, despachos, gimnasios, talleres y más. Escríbenos si tienes otro tipo de negocio.",
-    href: "#",
-  },
+// ─── DEMOS POR CATEGORÍA ───────────────────────────────────────────────────
+const DEMOS: Record<string, { label: string; style: string; href: string }[]> = {
+  salon: [
+    { label: "Studio Lumière",  style: "Editorial alta moda · Bodoni · Rose-red",      href: "/web2" },
+    { label: "Atelier Blanc",   style: "Zen japonés · Noto Serif · Sage green",         href: "/demos/salon2" },
+    { label: "GLOW STUDIO",     style: "Gen-Z bold · Syne · Hot pink & yellow",         href: "/demos/salon3" },
+  ],
+  restaurante: [
+    { label: "Casa Fuego",      style: "Dark luxury editorial · Cormorant · Terracota", href: "/demos/restaurante" },
+    { label: "El Taquero",      style: "Street food vibrante · Archivo Black · Rojo",   href: "/demos/restaurante2" },
+    { label: "Trattoria Rossi", style: "Italiana rústica · Playfair · Verde bosque",    href: "/demos/restaurante3" },
+  ],
+  servicios: [
+    { label: "HydroFix",        style: "Plomería · Industrial · Bebas Neue · Cobre",    href: "/demos/plomero" },
+    { label: "Volt Pro",        style: "Electricista · Tech · Rajdhani · Amarillo",     href: "/demos/electricista" },
+    { label: "MotoFix",         style: "Mecánico automotriz · Barlow · Naranja",        href: "/demos/mecanico" },
+  ],
+};
+
+const CATEGORIAS = [
+  { value: "salon",      icon: Scissors,      label: "Salón de Belleza",       sub: "Estética, nail bar, spa" },
+  { value: "restaurante",icon: UtensilsCrossed,label: "Restaurante / Café",    sub: "Taquería, fonda, bar" },
+  { value: "servicios",  icon: Wrench,         label: "Servicios a Domicilio", sub: "Plomero, electricista, mecánico" },
 ];
 
 export default function WebsQuiz() {
@@ -154,6 +140,28 @@ export default function WebsQuiz() {
                 EMPEZAR — ES GRATIS <ArrowRight className="w-5 h-5" />
               </button>
               <p className="text-white/20 text-xs mt-6">Sin compromiso. Sin spam. Solo 60 segundos.</p>
+
+              {/* Preview de demos disponibles */}
+              <div className="mt-16 pt-12 border-t border-white/5 text-left">
+                <p className="text-white/20 text-[10px] uppercase tracking-[0.3em] mb-6 text-center">9 diseños disponibles ahora mismo</p>
+                {CATEGORIAS.map((cat) => (
+                  <div key={cat.value} className="mb-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <cat.icon className="w-3.5 h-3.5 text-white/30" />
+                      <span className="text-white/30 text-xs font-bold uppercase tracking-widest">{cat.label}</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {DEMOS[cat.value].map((d) => (
+                        <Link key={d.href} href={d.href} target="_blank"
+                          className="bg-white/3 border border-white/8 rounded-xl px-3 py-2.5 hover:border-[var(--accent)]/40 hover:bg-[var(--accent)]/5 transition-all group text-center">
+                          <p className="text-white/60 text-xs font-semibold group-hover:text-white transition-colors truncate">{d.label}</p>
+                          <p className="text-[var(--accent)] text-[9px] mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity">Ver →</p>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -161,15 +169,12 @@ export default function WebsQuiz() {
           {step === "tipo" && (
             <div className="pt-16">
               <p className="text-white/40 text-sm font-medium mb-3">Pregunta 1 de 4</p>
-              <h2 className="text-3xl md:text-4xl font-black mb-10">
+              <h2 className="text-3xl md:text-4xl font-black mb-3">
                 ¿Qué tipo de<br />negocio tienes?
               </h2>
+              <p className="text-white/40 text-sm mb-8">Cada categoría tiene 3 diseños exclusivos disponibles.</p>
               <div className="space-y-4">
-                {[
-                  { icon: Scissors, label: "Salón de belleza / Estética", value: "salon" },
-                  { icon: UtensilsCrossed, label: "Restaurante / Café / Bar", value: "restaurante" },
-                  { icon: Building2, label: "Otro tipo de negocio", value: "otro" },
-                ].map((opt) => (
+                {CATEGORIAS.map((opt) => (
                   <button
                     key={opt.value}
                     onClick={() => {
@@ -181,8 +186,14 @@ export default function WebsQuiz() {
                     <div className="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center group-hover:bg-[var(--accent)]/10 transition-colors shrink-0">
                       <opt.icon className="w-5 h-5 text-white/60 group-hover:text-[var(--accent)] transition-colors" />
                     </div>
-                    <span className="font-semibold text-white/80 group-hover:text-white transition-colors">{opt.label}</span>
-                    <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-[var(--accent)] ml-auto transition-all group-hover:translate-x-1" />
+                    <div className="flex-1">
+                      <p className="font-semibold text-white/80 group-hover:text-white transition-colors">{opt.label}</p>
+                      <p className="text-white/30 text-xs mt-0.5">{opt.sub}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-[10px] font-bold bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded-full">3 diseños</span>
+                      <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-[var(--accent)] transition-all group-hover:translate-x-1" />
+                    </div>
                   </button>
                 ))}
               </div>
@@ -277,57 +288,57 @@ export default function WebsQuiz() {
           {step === "resultado" && (
             <div className="pt-4">
               {/* Scarcity banner */}
-              <div className="flex items-start gap-3 bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-4 py-3 mb-10">
+              <div className="flex items-start gap-3 bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-4 py-3 mb-8">
                 <AlertTriangle className="w-4 h-4 text-yellow-500 mt-0.5 shrink-0" />
                 <p className="text-yellow-200 text-sm font-medium">
                   <strong>Diseños únicos.</strong> Cada sitio se vende una sola vez. Una vez vendido, no se vuelve a comercializar ese diseño.
                 </p>
               </div>
 
-              <p className="text-white/40 text-sm font-medium mb-3">Resultados para {lead.nombre}</p>
-              <h2 className="text-3xl font-black mb-2">Sitios disponibles</h2>
-              <p className="text-white/40 mb-10">
-                Incluye dominio · 3 correos corporativos · Hosting 1 año
+              <p className="text-white/40 text-sm font-medium mb-2">Hola, {lead.nombre} 👋</p>
+              <h2 className="text-3xl font-black mb-2">Elige tu diseño</h2>
+              <p className="text-white/40 text-sm mb-8">
+                Los 3 diseños disponibles para tu tipo de negocio. Cada uno tiene su propio estilo — el tuyo es el que más te identifique.
               </p>
 
-              <div className="space-y-4 mb-12">
-                {SITES.map((site) => (
-                  <div
-                    key={site.label}
-                    className={`border rounded-2xl overflow-hidden ${
-                      site.available
-                        ? "border-[var(--accent)]/60 bg-[var(--accent)]/5"
-                        : "border-white/10 bg-white/3 opacity-50"
-                    }`}
-                  >
-                    <div className="px-6 py-5 flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${site.available ? "bg-[var(--accent)]/20" : "bg-white/5"}`}>
-                          <site.icon className={`w-5 h-5 ${site.available ? "text-[var(--accent)]" : "text-white/30"}`} />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <p className="font-bold text-white">{site.label}</p>
-                            <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${
-                              site.available ? "bg-[var(--accent)] text-white" : "bg-white/10 text-white/40"
-                            }`}>
-                              {site.badge}
-                            </span>
-                          </div>
-                          <p className="text-white/40 text-xs">{site.desc}</p>
-                        </div>
+              {/* 3 demos filtrados por tipo */}
+              <div className="space-y-3 mb-10">
+                {(DEMOS[lead.tipo ?? "salon"] ?? DEMOS.salon).map((demo, i) => (
+                  <div key={demo.href} className="border border-[var(--accent)]/40 bg-[var(--accent)]/5 rounded-2xl px-5 py-4 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <span className="text-[var(--accent)] font-black text-xl tabular-nums shrink-0">0{i + 1}</span>
+                      <div className="min-w-0">
+                        <p className="font-bold text-white truncate">{demo.label}</p>
+                        <p className="text-white/35 text-xs truncate">{demo.style}</p>
                       </div>
-                      {site.available && (
-                        <Link href={site.href} target="_blank" className="shrink-0 ml-4">
-                          <span className="flex items-center gap-1 text-[var(--accent)] text-xs font-bold hover:underline">
-                            Ver demo <ExternalLink className="w-3 h-3" />
-                          </span>
-                        </Link>
-                      )}
                     </div>
+                    <Link href={demo.href} target="_blank" className="shrink-0">
+                      <span className="flex items-center gap-1.5 bg-white/10 hover:bg-[var(--accent)] text-white text-xs font-bold px-4 py-2 rounded-full transition-all">
+                        <Eye className="w-3 h-3" /> Ver demo
+                      </span>
+                    </Link>
                   </div>
                 ))}
               </div>
+
+              {/* También ver otras categorías */}
+              <details className="mb-10 group">
+                <summary className="text-white/30 text-xs cursor-pointer hover:text-white/50 transition-colors list-none flex items-center gap-2 mb-3">
+                  <ExternalLink className="w-3 h-3" /> Ver demos de otras categorías
+                </summary>
+                {Object.entries(DEMOS).filter(([k]) => k !== lead.tipo).map(([cat, demos]) => (
+                  <div key={cat} className="mb-3">
+                    <p className="text-white/20 text-[10px] uppercase tracking-widest mb-2 capitalize">{cat}</p>
+                    {demos.map((d) => (
+                      <Link key={d.href} href={d.href} target="_blank"
+                        className="flex items-center justify-between px-4 py-2 rounded-xl hover:bg-white/5 transition-colors">
+                        <span className="text-white/50 text-xs">{d.label}</span>
+                        <ExternalLink className="w-3 h-3 text-white/20" />
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </details>
 
               {/* Pricing */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8">
