@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Star, Clock, MapPin, Phone, Instagram, ChevronRight, Scissors, Sparkles,
   Palette, Hand, Eye, ArrowRight
@@ -89,12 +90,16 @@ export default function SalonDemo() {
 
       {/* ── HERO ──────────────────────────────────────────── */}
       <section className="relative bg-[#1C1410] text-white overflow-hidden min-h-[90vh] flex items-center">
-        {/* Texture overlay */}
-        <div className="absolute inset-0 opacity-5"
-          style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #C8A882 1px, transparent 0)", backgroundSize: "32px 32px" }}
+        {/* Hero image */}
+        <Image
+          src="/images/salon/hero.jpg"
+          alt="Studio Lumière — Salón de Belleza"
+          fill
+          className="object-cover opacity-30"
+          priority
         />
-        {/* Warm gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#2D1F18] via-[#1C1410] to-[#0F0B08]" />
+        {/* Warm gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2D1F18]/80 via-[#1C1410]/70 to-[#0F0B08]/90" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
           <div>
@@ -191,28 +196,24 @@ export default function SalonDemo() {
           </div>
           {/* Asymmetric gallery grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="col-span-2 row-span-2 bg-gradient-to-br from-[#4A3028] to-[#2D1F18] rounded-2xl aspect-square flex items-center justify-center">
-              <span className="text-[#C8A882]/40 text-xs font-bold uppercase tracking-widest">Foto destacada</span>
+            <div className="col-span-2 row-span-2 relative rounded-2xl overflow-hidden aspect-square">
+              <Image src="/images/salon/gallery-1.jpg" alt="Balayage resultado" fill className="object-cover hover:scale-105 transition-transform duration-500" />
             </div>
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-gradient-to-br from-[#3D2820] to-[#2A1C16] rounded-2xl aspect-square flex items-center justify-center">
-                <span className="text-[#C8A882]/30 text-[10px] font-bold uppercase tracking-widest">Foto {i + 1}</span>
+            {[2,3,4,5].map((i) => (
+              <div key={i} className="relative rounded-2xl overflow-hidden aspect-square">
+                <Image src={`/images/salon/gallery-${i}.jpg`} alt={`Resultado ${i}`} fill className="object-cover hover:scale-105 transition-transform duration-500" />
               </div>
             ))}
           </div>
-          <p className="text-center text-white/30 text-sm mt-6">
-            Próximamente: galería con fotos reales de trabajos
-          </p>
         </div>
       </section>
 
       {/* ── NOSOTROS ──────────────────────────────────────── */}
       <section id="nosotros" className="py-24 bg-[#F5F0EB] scroll-mt-20">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-          <div className="bg-gradient-to-br from-[#2D1F18] to-[#1C1410] rounded-3xl aspect-square flex items-center justify-center">
-            <div className="text-center text-white/20">
-              <p className="text-xs font-bold uppercase tracking-widest">Foto del equipo</p>
-            </div>
+          <div className="relative rounded-3xl overflow-hidden aspect-square">
+            <Image src="/images/salon/about.jpg" alt="Equipo Studio Lumière" fill className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1C1410]/60 to-transparent" />
           </div>
           <div>
             <p className="text-[#9B6B5A] text-xs font-bold uppercase tracking-[0.3em] mb-4">Nuestra historia</p>
