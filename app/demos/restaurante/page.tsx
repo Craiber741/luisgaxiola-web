@@ -279,7 +279,7 @@ export default function RestauranteDemo() {
               <Image src="/images/restaurante/gallery-2.jpg" alt="Bar" fill className="object-cover hover:scale-103 transition-transform duration-700" />
             </div>
             <div className="col-span-12 md:col-span-5 relative overflow-hidden">
-              <Image src="/images/restaurante/gallery-3.jpg" alt="Salón privado" fill className="object-cover hover:scale-103 transition-transform duration-700" />
+              <Image src="/images/restaurante/food-1.jpg" alt="Platillo estrella" fill className="object-cover hover:scale-103 transition-transform duration-700" />
             </div>
           </div>
         </div>
@@ -289,10 +289,10 @@ export default function RestauranteDemo() {
       <section id="nosotros" className="py-32 bg-[#0C0A06] scroll-mt-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Chef image */}
+            {/* Restaurant image */}
             <div className="relative">
               <div className="relative aspect-[3/4] max-w-md overflow-hidden">
-                <Image src="/images/restaurante/chef.jpg" alt="Chef Casa Fuego" fill className="object-cover" />
+                <Image src="/images/restaurante/gallery-1.jpg" alt="Casa Fuego — Ambiente" fill className="object-cover object-top" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A06]/80 via-transparent to-transparent" />
               </div>
               {/* Decorative frame */}
