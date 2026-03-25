@@ -66,17 +66,22 @@ const IMAGES = [
   },
 ];
 
-async function main() {
-  console.log(`\n🎨 Generando ${IMAGES.length} imágenes para restaurante con gpt-image-1...\n`);
+// Solo genera imágenes que no existen todavía
+import { existsSync } from "fs";
 
-  for (const img of IMAGES) {
+async function main() {
+  const pending = IMAGES.filter((img) => !existsSync(join(OUTPUT_DIR, img.file)));
+  console.log(`\n🎨 Generando ${pending.length} imágenes faltantes con gpt-image-1...\n`);
+  if (pending.length === 0) { console.log("✅ Todas las imágenes ya existen.\n"); return; }
+
+  for (const img of pending) {
     process.stdout.write(`  ⏳ ${img.file}...`);
     try {
       const response = await client.images.generate({
         model: "gpt-image-1",
         prompt: img.prompt,
         size: img.size,
-        quality: "high",
+        quality: "medium",
         n: 1,
       });
 

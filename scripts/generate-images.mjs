@@ -70,7 +70,7 @@ async function main() {
         model: "gpt-image-1",
         prompt: img.prompt,
         size: img.size,
-        quality: "high",
+        quality: "medium",
         n: 1,
       });
 
