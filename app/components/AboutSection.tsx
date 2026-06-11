@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { MapPin, Zap, TrendingUp, Code2 } from "lucide-react";
+import { Zap, TrendingUp, Code2 } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
 const traits = [
@@ -83,10 +83,6 @@ export default function AboutSection() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2 text-sm font-bold text-black/50 uppercase tracking-widest">
-              <MapPin className="w-4 h-4 text-[var(--accent)]" />
-              Mexicali, Baja California · México
-            </div>
           </AnimatedSection>
 
         </div>
