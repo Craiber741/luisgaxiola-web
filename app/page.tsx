@@ -4,9 +4,9 @@ import ContactForm from "./components/ContactForm";
 import SubstackForm from "./components/SubstackForm";
 import HeroSection from "./components/HeroSection";
 import StatsBar from "./components/StatsBar";
-import AboutSection from "./components/AboutSection";
-import PhotoStrip from "./components/PhotoStrip";
+import ContentHub from "./components/ContentHub";
 import AnimatedSection from "./components/AnimatedSection";
+import { getWordPressPosts, getSubstackPosts, getYouTubePosts } from "@/lib/content";
 
 const SUBSTACK_URL = "https://elmediabuyer.substack.com/";
 
@@ -35,7 +35,13 @@ const services = [
   { title: "Mentoría 1 a 1", desc: "Acceso directo a mi cerebro y mis estrategias.", slug: "mentoria" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const [wpPosts, substackPosts, ytPosts] = await Promise.all([
+    getWordPressPosts(),
+    getSubstackPosts(),
+    getYouTubePosts(),
+  ]);
+
   return (
     <main className="flex flex-col bg-white selection:bg-[var(--accent)] selection:text-white">
 
@@ -45,11 +51,8 @@ export default function Home() {
       {/* Stats Bar */}
       <StatsBar />
 
-      {/* About */}
-      <AboutSection />
-
-      {/* Photo Strip */}
-      <PhotoStrip />
+      {/* Content Hub */}
+      <ContentHub wpPosts={wpPosts} substackPosts={substackPosts} ytPosts={ytPosts} />
 
       {/* Ventures */}
       <section className="w-full bg-gray-50 border-t border-gray-200">
