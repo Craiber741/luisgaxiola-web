@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-const SUBSTACK_URL = "https://elmediabuyer.substack.com/";
+const SUBSTACK_URL = "https://laempresade1persona.substack.com/";
 
 function FadeUp({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (

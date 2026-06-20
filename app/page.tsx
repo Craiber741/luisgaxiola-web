@@ -8,7 +8,7 @@ import ContentHub from "./components/ContentHub";
 import AnimatedSection from "./components/AnimatedSection";
 import { getWordPressPosts, getSubstackPosts, getYouTubePosts } from "@/lib/content";
 
-const SUBSTACK_URL = "https://elmediabuyer.substack.com/";
+const SUBSTACK_URL = "https://laempresade1persona.substack.com/";
 
 const ventures = [
   {

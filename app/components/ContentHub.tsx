@@ -222,7 +222,7 @@ export default function ContentHub({ wpPosts, substackPosts, ytPosts }: ContentH
         <AnimatedSection delay={0.1} className="mt-10 flex flex-wrap gap-4">
           <a href="https://blog.luisgaxiola.com" target="_blank" rel="noopener noreferrer" className="text-xs font-black uppercase tracking-widest text-[#2563eb] hover:underline">Blog →</a>
           <a href="https://www.youtube.com/@luis.gaxiola1" target="_blank" rel="noopener noreferrer" className="text-xs font-black uppercase tracking-widest text-[#dc2626] hover:underline">YouTube →</a>
-          <a href="https://elmediabuyer.substack.com" target="_blank" rel="noopener noreferrer" className="text-xs font-black uppercase tracking-widest text-[#f97316] hover:underline">Newsletter →</a>
+          <a href="https://laempresade1persona.substack.com" target="_blank" rel="noopener noreferrer" className="text-xs font-black uppercase tracking-widest text-[#f97316] hover:underline">Newsletter →</a>
           <a href="https://www.instagram.com/luisgaxiolavibemarketing/" target="_blank" rel="noopener noreferrer" className="text-xs font-black uppercase tracking-widest text-[#7c3aed] hover:underline">Instagram →</a>
         </AnimatedSection>
       </div>

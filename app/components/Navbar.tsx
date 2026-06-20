@@ -11,7 +11,7 @@ const links = [
   { label: "SITIOS WEB", href: "/web" },
 ];
 
-const SUBSTACK_URL = "https://elmediabuyer.substack.com/";
+const SUBSTACK_URL = "https://laempresade1persona.substack.com/";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
