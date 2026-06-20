@@ -10,6 +10,7 @@ interface ContentHubProps {
   wpPosts: ContentPost[];
   substackPosts: ContentPost[];
   ytPosts: ContentPost[];
+  igPosts: ContentPost[];
 }
 
 const platformConfig = {
@@ -36,6 +37,14 @@ const platformConfig = {
     border: "hover:border-[#dc2626]",
     shadow: "hover:shadow-[0_0_24px_-8px_#dc2626]",
     cta: "Ver video",
+  },
+  instagram: {
+    label: "INSTAGRAM",
+    color: "#C13584",
+    bg: "bg-[#C13584]",
+    border: "hover:border-[#C13584]",
+    shadow: "hover:shadow-[0_0_24px_-8px_#C13584]",
+    cta: "Ver en Instagram",
   },
 };
 
@@ -157,12 +166,13 @@ function InstagramCard() {
   );
 }
 
-export default function ContentHub({ wpPosts, substackPosts, ytPosts }: ContentHubProps) {
+export default function ContentHub({ wpPosts, substackPosts, ytPosts, igPosts }: ContentHubProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const allPosts: ContentPost[] = [
     ...wpPosts,
     ...ytPosts,
+    ...igPosts,
     ...substackPosts,
   ];
 

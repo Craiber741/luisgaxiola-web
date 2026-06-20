@@ -1,5 +1,5 @@
 export type ContentPost = {
-  platform: "blog" | "substack" | "youtube";
+  platform: "blog" | "substack" | "youtube" | "instagram";
   title: string;
   excerpt: string;
   date: string;
@@ -221,5 +221,46 @@ export async function getYouTubePosts(): Promise<ContentPost[]> {
     });
   } catch {
     return FALLBACK_YT;
+  }
+}
+
+// Instagram no tiene RSS público: se usa la API oficial de Meta (Graph API).
+// Requiere dos secretos en el entorno del build (GitHub Actions):
+//   IG_USER_ID       → ID numérico de la cuenta de Instagram Business
+//   IG_ACCESS_TOKEN  → token de acceso (idealmente de System User, no expira)
+// Si los secretos no están configurados, regresa [] y el sitio sigue funcionando
+// (solo se muestra la tarjeta de "seguir perfil").
+export async function getInstagramPosts(): Promise<ContentPost[]> {
+  const userId = process.env.IG_USER_ID;
+  const token = process.env.IG_ACCESS_TOKEN;
+  if (!userId || !token) return [];
+  try {
+    const fields = "caption,media_type,media_url,permalink,thumbnail_url,timestamp";
+    const res = await fetch(
+      `https://graph.facebook.com/v21.0/${userId}/media?fields=${fields}&limit=3&access_token=${token}`,
+      FETCH_OPTS
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const items: any[] = data?.data || [];
+    return items.slice(0, 3).map((m) => {
+      const caption = stripHtml(m.caption || "");
+      return {
+        platform: "instagram" as const,
+        title: caption
+          ? caption.length > 80
+            ? caption.slice(0, 80) + "..."
+            : caption
+          : "Nuevo post en Instagram",
+        excerpt: caption.length > 110 ? caption.slice(0, 110) + "..." : "",
+        date: m.timestamp ? m.timestamp.slice(0, 10) : "",
+        image:
+          m.media_type === "VIDEO" ? m.thumbnail_url || null : m.media_url || null,
+        url: m.permalink || "https://www.instagram.com/luisgaxiolavibemarketing/",
+      };
+    });
+  } catch {
+    return [];
   }
 }

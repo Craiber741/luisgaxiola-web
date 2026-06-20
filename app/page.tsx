@@ -6,7 +6,7 @@ import HeroSection from "./components/HeroSection";
 import StatsBar from "./components/StatsBar";
 import ContentHub from "./components/ContentHub";
 import AnimatedSection from "./components/AnimatedSection";
-import { getWordPressPosts, getSubstackPosts, getYouTubePosts } from "@/lib/content";
+import { getWordPressPosts, getSubstackPosts, getYouTubePosts, getInstagramPosts } from "@/lib/content";
 
 const SUBSTACK_URL = "https://laempresade1persona.substack.com/";
 
@@ -36,10 +36,11 @@ const services = [
 ];
 
 export default async function Home() {
-  const [wpPosts, substackPosts, ytPosts] = await Promise.all([
+  const [wpPosts, substackPosts, ytPosts, igPosts] = await Promise.all([
     getWordPressPosts(),
     getSubstackPosts(),
     getYouTubePosts(),
+    getInstagramPosts(),
   ]);
 
   return (
@@ -52,7 +53,7 @@ export default async function Home() {
       <StatsBar />
 
       {/* Content Hub */}
-      <ContentHub wpPosts={wpPosts} substackPosts={substackPosts} ytPosts={ytPosts} />
+      <ContentHub wpPosts={wpPosts} substackPosts={substackPosts} ytPosts={ytPosts} igPosts={igPosts} />
 
       {/* Ventures */}
       <section className="w-full bg-gray-50 border-t border-gray-200">
