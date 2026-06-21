@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useInView } from "framer-motion";
-import { ChevronDown } from "lucide-react";
 import type { AdsStats, NicheStats } from "@/lib/ads";
 import AnimatedCounter from "./AnimatedCounter";
 
@@ -11,86 +10,58 @@ const money = (v: number) =>
 const dec = (v: number, d = 2) =>
   v.toLocaleString("es-MX", { minimumFractionDigits: d, maximumFractionDigits: d });
 
-function NicheCard({ niche }: { niche: NicheStats }) {
-  const [open, setOpen] = useState(false);
+function LiveDot({ light = false }: { light?: boolean }) {
+  const color = light ? "bg-red-500" : "bg-red-500";
   return (
-    <div className="border border-gray-200 bg-white hover:border-[var(--accent)] transition-colors">
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-5">
-          <h3 className="text-lg font-black uppercase tracking-tight text-black">
-            {niche.niche}
-          </h3>
-          <span className="text-[10px] font-black uppercase tracking-widest text-black/40">
-            {niche.accountCount} {niche.accountCount === 1 ? "cuenta" : "cuentas"}
-          </span>
-        </div>
+    <span className="relative flex h-2.5 w-2.5">
+      <span
+        className={`absolute inline-flex h-full w-full rounded-full ${color} opacity-75 animate-ping`}
+      />
+      <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${color}`} />
+    </span>
+  );
+}
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-2xl font-black tracking-tighter text-black">
-              ${money(niche.spend)}
-            </p>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mt-1">
-              Inversión
-            </p>
-          </div>
-          <div>
-            <p className="text-2xl font-black tracking-tighter text-black">
-              {money(niche.leads)}
-            </p>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mt-1">
-              Leads
-            </p>
-          </div>
-          <div>
-            <p className="text-2xl font-black tracking-tighter text-[var(--accent)]">
-              {niche.cpl != null ? `$${dec(niche.cpl)}` : "—"}
-            </p>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mt-1">
-              CPL prom.
-            </p>
-          </div>
-          <div>
-            <p className="text-2xl font-black tracking-tighter text-black">
-              {dec(niche.ctr)}%
-            </p>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mt-1">
-              CTR prom.
-            </p>
-          </div>
-        </div>
+function NicheCard({ niche }: { niche: NicheStats }) {
+  return (
+    <div className="aspect-square flex flex-col p-5 md:p-6 border border-gray-200 bg-white hover:border-[var(--accent)] transition-colors">
+      {/* Top: badge EN VIVO + nicho */}
+      <div className="flex items-center justify-between gap-2">
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-red-600">
+          <LiveDot />
+          En vivo
+        </span>
+        <span className="text-[11px] md:text-xs font-black uppercase tracking-tight text-black/60 text-right leading-tight">
+          {niche.niche}
+        </span>
       </div>
 
-      {niche.accounts.length > 1 && (
-        <>
-          <button
-            onClick={() => setOpen((o) => !o)}
-            className="w-full flex items-center justify-center gap-1 py-2.5 border-t border-gray-100 text-[10px] font-black uppercase tracking-widest text-black/50 hover:text-black hover:bg-gray-50 transition-colors"
-          >
-            {open ? "Ocultar" : "Ver desglose"}
-            <ChevronDown
-              className={`w-3 h-3 transition-transform ${open ? "rotate-180" : ""}`}
-            />
-          </button>
-          {open && (
-            <div className="border-t border-gray-100 divide-y divide-gray-100">
-              {niche.accounts.map((a) => (
-                <div
-                  key={a.label}
-                  className="px-6 py-3 grid grid-cols-4 gap-2 text-xs"
-                >
-                  <span className="font-bold text-black/70 col-span-1">{a.label}</span>
-                  <span className="text-black/60 text-right">${money(a.spend)}</span>
-                  <span className="text-black/60 text-right">{money(a.leads)} lds</span>
-                  <span className="text-[var(--accent)] font-bold text-right">
-                    {a.cpl != null ? `$${dec(a.cpl)}` : "—"}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </>
-      )}
+      {/* Centro: métrica principal */}
+      <div className="flex-1 flex flex-col justify-center">
+        <p className="text-4xl md:text-5xl font-black tracking-tighter text-black leading-none">
+          ${money(niche.spend)}
+        </p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mt-2">
+          Inversión · 7 días
+        </p>
+        <p className="text-xl md:text-2xl font-black tracking-tight text-[var(--accent)] mt-4">
+          {money(niche.leads)}{" "}
+          <span className="text-sm font-bold text-black/50">prospectos</span>
+        </p>
+      </div>
+
+      {/* Abajo: CPL · CTR */}
+      <div className="flex items-center justify-between pt-3 border-t border-gray-100 text-xs">
+        <span className="font-bold text-black/60">
+          CPL{" "}
+          <span className="text-black">
+            {niche.cpl != null ? `$${dec(niche.cpl)}` : "—"}
+          </span>
+        </span>
+        <span className="font-bold text-black/60">
+          CTR <span className="text-black">{dec(niche.ctr)}%</span>
+        </span>
+      </div>
     </div>
   );
 }
@@ -109,16 +80,19 @@ export default function LiveAdsStats({ data }: { data: AdsStats | null }) {
       id="resultados"
       className="w-full bg-gray-50 border-t border-gray-200 scroll-mt-16"
     >
-      <div className="max-w-5xl mx-auto px-4 py-24">
-        <p className="text-xs font-black uppercase tracking-[0.3em] text-black/40 mb-4">
-          RESULTADOS REALES · ÚLTIMOS 7 DÍAS
-        </p>
+      <div className="max-w-5xl mx-auto px-4 py-20 md:py-24">
+        <div className="flex items-center gap-2 mb-4">
+          <LiveDot />
+          <p className="text-xs font-black uppercase tracking-[0.3em] text-red-600">
+            EN VIVO · ÚLTIMOS 7 DÍAS
+          </p>
+        </div>
         <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-4 text-black leading-none">
           LO QUE MUEVO<br />
           <span className="text-[var(--accent)]">CADA SEMANA.</span>
         </h2>
-        <p className="text-black/50 font-medium mb-14 max-w-xl">
-          Datos en vivo de las cuentas que gestiono, agregados por nicho y anonimizados.
+        <p className="text-black/50 font-medium mb-12 max-w-xl">
+          Datos reales de las cuentas que gestiono, agregados por nicho y anonimizados.
           No son promesas — es lo que está pasando ahora mismo.
         </p>
 
@@ -139,7 +113,7 @@ export default function LiveAdsStats({ data }: { data: AdsStats | null }) {
               inView={inView}
               className="text-3xl md:text-4xl font-black tracking-tighter text-white"
             />
-            <p className="text-xs text-white/50 font-medium">Leads generados</p>
+            <p className="text-xs text-white/50 font-medium">Prospectos generados</p>
           </div>
           <div className="flex flex-col items-start gap-1">
             <AnimatedCounter
@@ -163,8 +137,8 @@ export default function LiveAdsStats({ data }: { data: AdsStats | null }) {
           </div>
         </div>
 
-        {/* Por nicho */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Por nicho — tarjetas cuadradas */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
           {data.niches.map((n) => (
             <NicheCard key={n.niche} niche={n} />
           ))}

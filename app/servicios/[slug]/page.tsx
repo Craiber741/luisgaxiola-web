@@ -1,24 +1,11 @@
 import Link from "next/link";
 import { ArrowLeft, Check, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
-import ContactForm from "@/app/components/ContactForm";
-import LiveAdsStats from "@/app/components/LiveAdsStats";
-import { getAdsStatsByNiche } from "@/lib/ads";
+import Quiz from "@/app/components/Quiz";
 
 // Data simulator (in a real app this could come from a CMS or config file)
+// Nota: "media-buying" vive en su propia página dedicada (app/servicios/media-buying).
 const services = {
-    "media-buying": {
-        title: "Media Buying (Ads)",
-        headline: "TU TRÁFICO ES BASURA.",
-        problem: "Estás donando dinero a Zuckerberg. Tus anuncios son genéricos, tu targeting es perezoso y tu ROAS da vergüenza.",
-        solution: "Gestión de campañas en Meta, TikTok y Google Ads con IA propietaria. Estructuras probadas para escalar de $1k a $50k/mes sin romper el CPA.",
-        bullets: [
-            "Optimización diaria con IA (no 'set and forget').",
-            "Creativos basados en Psicología de Ventas.",
-            "Reportes de rentabilidad real (no vanity metrics)."
-        ],
-        cta: "QUIERO ESCALAR MIS ADS"
-    },
     "consultoria": {
         title: "Consultoría Estratégica",
         headline: "TIENES UN CUELLO DE BOTELLA.",
@@ -57,8 +44,6 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         notFound();
     }
 
-    const adsStats = slug === "media-buying" ? await getAdsStatsByNiche() : null;
-
     return (
         <main className="flex min-h-screen flex-col items-center bg-white">
             <div className="w-full max-w-4xl px-4 pt-4 pb-16 md:px-24 md:pt-24">
@@ -95,13 +80,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                         </ul>
                     </div>
                     <div className="flex flex-col justify-center items-start">
-                        <ContactForm serviceName={service.title} />
+                        <Quiz serviceName={service.title} />
                     </div>
                 </div>
 
             </div>
-
-            {adsStats && <LiveAdsStats data={adsStats} />}
         </main>
     );
 }

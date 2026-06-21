@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 
-const STANDALONE_ROUTES = ["/webs", "/web2", "/demos"];
+const STANDALONE_ROUTES = ["/webs", "/web2", "/demos", "/servicios/media-buying"];
 
 export default function SiteWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

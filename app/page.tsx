@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
-import ContactForm from "./components/ContactForm";
+import Quiz from "./components/Quiz";
 import SubstackForm from "./components/SubstackForm";
 import HeroSection from "./components/HeroSection";
 import StatsBar from "./components/StatsBar";
@@ -128,7 +128,7 @@ export default async function Home() {
           </div>
 
           <section id="contacto" className="scroll-mt-24">
-            <ContactForm />
+            <Quiz serviceName="General" />
           </section>
         </div>
       </section>
