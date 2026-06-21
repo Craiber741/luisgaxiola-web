@@ -1,0 +1,29 @@
+name: Blog semanal Meta Ads (borrador)
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Lunes 15:00 UTC ≈ 08:00 en Mexicali (horario de verano)
+    - cron: '0 15 * * 1'
+
+jobs:
+  weekly-blog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generar borrador del blog
+        run: node scripts/weekly-blog.mjs
+        env:
+          FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
+          AD_ACCOUNT_NICHES: ${{ secrets.AD_ACCOUNT_NICHES }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4.1-mini
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
