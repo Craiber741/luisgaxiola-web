@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowDown, Check, X } from "lucide-react";
+import { ArrowDown, Check, X, ChevronDown } from "lucide-react";
 import LiveAdsStats from "@/app/components/LiveAdsStats";
 import Quiz from "@/app/components/Quiz";
 import { getAdsStatsByNiche } from "@/lib/ads";
@@ -25,6 +25,33 @@ const STEPS = [
     n: "3",
     t: "Armamos el plan",
     d: "Si encajamos, definimos la estrategia y echamos a andar tus campañas.",
+  },
+];
+
+const FAQS = [
+  {
+    q: "¿Cuánto cuesta?",
+    a: "No manejo precio de catálogo. Depende de tu negocio, tu meta y cuánto vas a invertir en ads. Contesta el quiz y te paso una propuesta a tu medida.",
+  },
+  {
+    q: "¿En cuánto tiempo veo resultados?",
+    a: "Las campañas empiezan a soltar datos en los primeros días. Los buenos resultados llegan optimizando semana con semana. No te prometo milagros de la noche a la mañana.",
+  },
+  {
+    q: "¿Cuánto necesito invertir en anuncios?",
+    a: "Depende de tu giro y de a dónde quieres llegar. Si apenas empiezas, te digo con qué presupuesto tiene sentido arrancar para no tirar el dinero.",
+  },
+  {
+    q: "¿Trabajas con mi tipo de negocio?",
+    a: "He llevado cuentas de inmobiliaria, dental, restaurantes, salud, estética y más (los ves arriba, en vivo). Si tu giro no aparece, dímelo en el quiz y te digo si te puedo ayudar.",
+  },
+  {
+    q: "¿Qué incluye?",
+    a: "Tus campañas en Meta e Instagram de punta a punta: estrategia, estructura de cuenta, optimización constante y reportes claros de lo que de verdad importa.",
+  },
+  {
+    q: "¿Por qué tú y no una agencia más barata?",
+    a: "Conmigo hablas directo con quien mueve tus campañas, no con un becario rotando entre 30 cuentas. Y los números de arriba son reales, actualizados todos los días.",
   },
 ];
 
@@ -146,6 +173,26 @@ export default async function MediaBuyingLanding() {
               </ul>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="px-5 py-16 md:py-20 max-w-3xl mx-auto w-full">
+        <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-black mb-8">
+          Preguntas que me hacen seguido
+        </h2>
+        <div className="divide-y divide-gray-200 border-t border-b border-gray-200">
+          {FAQS.map((f) => (
+            <details key={f.q} className="group">
+              <summary className="flex items-center justify-between gap-4 cursor-pointer list-none py-5">
+                <span className="font-black text-black text-base md:text-lg">{f.q}</span>
+                <ChevronDown className="w-5 h-5 text-[var(--accent)] flex-shrink-0 transition-transform group-open:rotate-180" />
+              </summary>
+              <p className="text-black/60 font-medium leading-relaxed pb-5 -mt-1">
+                {f.a}
+              </p>
+            </details>
+          ))}
         </div>
       </section>
 
