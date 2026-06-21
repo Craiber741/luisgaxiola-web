@@ -1,4 +1,9 @@
-import { classifyNiche, NICHE_ORDER, type Niche } from "./ads-accounts";
+import {
+  classifyNiche,
+  getLeadEventOverrides,
+  NICHE_ORDER,
+  type Niche,
+} from "./ads-accounts";
 
 // Stats de Meta Ads de los últimos 7 días, agregados por nicho y desglosados por cuenta
 // anonimizada. Se ejecuta en el build (export estático); el rebuild diario los refresca.
@@ -58,11 +63,17 @@ function toUsd(amount: number, currency: string): number {
 
 // "Leads"/prospectos = conversaciones de mensajería iniciadas (WhatsApp/Messenger) +
 // leads de formulario. En el mercado de Luis la mayoría de la conversión es por mensaje.
+// Si una cuenta usa una conversión personalizada como evento de lead, se define en
+// AD_ACCOUNT_LEAD_EVENTS (actId -> action_type) y ese valor reemplaza al default.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function extractLeads(actions: any[] | undefined): number {
+function extractLeads(actions: any[] | undefined, actId: string): number {
   if (!actions) return 0;
   const m: Record<string, number> = {};
   for (const a of actions) m[a.action_type] = Number(a.value) || 0;
+
+  const override = getLeadEventOverrides()[actId];
+  if (override) return m[override] ?? 0;
+
   // Lead de formulario: un solo valor canónico (no sumar alias duplicados).
   const formLeads =
     m["lead"] ?? m["onsite_conversion.lead_grouped"] ?? m["onsite_web_lead"] ?? 0;
@@ -111,7 +122,7 @@ async function getInsights(token: string, actId: string): Promise<RawInsights | 
     impressions: Number(row.impressions) || 0,
     reach: Number(row.reach) || 0,
     clicks: Number(row.clicks) || 0,
-    leads: extractLeads(row.actions),
+    leads: extractLeads(row.actions, actId),
   };
 }
 

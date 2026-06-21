@@ -23,6 +23,7 @@ jobs:
         env:
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
           AD_ACCOUNT_NICHES: ${{ secrets.AD_ACCOUNT_NICHES }}
+          AD_ACCOUNT_LEAD_EVENTS: ${{ secrets.AD_ACCOUNT_LEAD_EVENTS }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4.1-mini
           WP_USER: ${{ secrets.WP_USER }}

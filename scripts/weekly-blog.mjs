@@ -49,6 +49,14 @@ const overrides = (() => {
   }
 })();
 
+const leadEventOverrides = (() => {
+  try {
+    return JSON.parse(process.env.AD_ACCOUNT_LEAD_EVENTS || "{}");
+  } catch {
+    return {};
+  }
+})();
+
 const NICHE_RULES = [
   ["Dental", /dental|odont|dentist|ortodonc/i],
   ["Inmobiliaria", /inmobil|bienes\s*ra[ií]ces|realty|real\s*estate/i],
@@ -64,9 +72,11 @@ function classify(actId, name) {
 const toUsd = (amt, cur) =>
   cur === "MXN" ? amt / MXN_PER_USD : amt; // USD u otras: tal cual
 
-function leadsFrom(actions) {
+function leadsFrom(actions, actId) {
   const m = {};
   for (const a of actions || []) m[a.action_type] = Number(a.value) || 0;
+  const override = leadEventOverrides[actId];
+  if (override) return m[override] ?? 0;
   const form =
     m["lead"] ?? m["onsite_conversion.lead_grouped"] ?? m["onsite_web_lead"] ?? 0;
   const msg = m["onsite_conversion.messaging_conversation_started_7d"] ?? 0;
@@ -145,7 +155,7 @@ async function main() {
         actions: {},
       });
     g.spend += toUsd(spendNative, acc.currency);
-    g.leads += leadsFrom(row.actions);
+    g.leads += leadsFrom(row.actions, acc.actId);
     g.clicks += Number(row.clicks || 0);
     g.impressions += Number(row.impressions || 0);
     g.accounts += 1;

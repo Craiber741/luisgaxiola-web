@@ -33,6 +33,19 @@ export function getOverrides(): Record<string, Niche> {
   return cachedOverrides!;
 }
 
+// Override del evento de lead por cuenta (cuando usa una conversión personalizada).
+// Secreto AD_ACCOUNT_LEAD_EVENTS = JSON { "act_123": "offsite_conversion.fb_pixel_custom" }.
+let cachedLeadEvents: Record<string, string> | null = null;
+export function getLeadEventOverrides(): Record<string, string> {
+  if (cachedLeadEvents) return cachedLeadEvents;
+  try {
+    cachedLeadEvents = JSON.parse(process.env.AD_ACCOUNT_LEAD_EVENTS || "{}");
+  } catch {
+    cachedLeadEvents = {};
+  }
+  return cachedLeadEvents!;
+}
+
 // Fallback por palabra clave sobre el nombre de la cuenta (si no hay override).
 const NICHE_RULES: { niche: Niche; pattern: RegExp }[] = [
   { niche: "Dental", pattern: /dental|odont|dentist|ortodonc/i },
