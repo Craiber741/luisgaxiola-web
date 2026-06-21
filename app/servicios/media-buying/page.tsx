@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ArrowDown, Check, X, ChevronDown } from "lucide-react";
 import LiveAdsStats from "@/app/components/LiveAdsStats";
 import Quiz from "@/app/components/Quiz";
@@ -93,6 +94,27 @@ export default async function MediaBuyingLanding() {
           marcas que venden todos los días. Aquí abajo te enseño números de esta semana.
           En vivo, no testimonios inventados.
         </p>
+
+        {/* Firma del fundador */}
+        <div className="flex items-center gap-3 mb-8">
+          <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-[var(--accent)]/30">
+            <Image
+              src="/images/luis/hero.jpg"
+              alt="Luis Gaxiola"
+              fill
+              className="object-cover"
+              style={{ objectPosition: "50% 20%" }}
+              unoptimized
+            />
+          </div>
+          <div>
+            <p className="font-black text-black text-sm leading-tight">Luis Gaxiola</p>
+            <p className="text-black/50 text-xs font-bold">
+              Media buyer · +7 años corriendo ads
+            </p>
+          </div>
+        </div>
+
         <a
           href="#quiz"
           className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-5 bg-[var(--accent)] text-white font-black text-lg uppercase tracking-tighter hover:brightness-110 transition-all"
@@ -198,11 +220,23 @@ export default async function MediaBuyingLanding() {
 
       {/* Quiz */}
       <section id="quiz" className="px-5 py-16 md:py-24 max-w-2xl mx-auto w-full scroll-mt-6">
-        <div className="text-center mb-8">
+        <div className="flex flex-col items-center text-center mb-8">
+          <div className="relative w-16 h-16 rounded-full overflow-hidden mb-4 ring-2 ring-[var(--accent)]/30">
+            <Image
+              src="/images/luis/hero.jpg"
+              alt="Luis Gaxiola"
+              fill
+              className="object-cover"
+              style={{ objectPosition: "50% 20%" }}
+              unoptimized
+            />
+          </div>
           <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-black mb-3">
             ¿Vemos si te puedo ayudar?
           </h2>
-          <p className="text-black/50 font-medium">Respóndeme 4 cosas y lo platicamos.</p>
+          <p className="text-black/50 font-medium">
+            Respóndeme 4 cosas y lo platicamos. Te reviso yo, en persona.
+          </p>
         </div>
         <Quiz serviceName="Media Buying" />
       </section>
