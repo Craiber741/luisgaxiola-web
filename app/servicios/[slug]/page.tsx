@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ArrowLeft, Check, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
 import ContactForm from "@/app/components/ContactForm";
+import LiveAdsStats from "@/app/components/LiveAdsStats";
+import { getAdsStatsByNiche } from "@/lib/ads";
 
 // Data simulator (in a real app this could come from a CMS or config file)
 const services = {
@@ -55,9 +57,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         notFound();
     }
 
+    const adsStats = slug === "media-buying" ? await getAdsStatsByNiche() : null;
+
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24 bg-white">
-            <div className="w-full max-w-4xl">
+        <main className="flex min-h-screen flex-col items-center bg-white">
+            <div className="w-full max-w-4xl px-4 pt-4 pb-16 md:px-24 md:pt-24">
                 <Link href="/" className="inline-flex items-center text-sm font-bold text-gray-500 hover:text-black mb-12 transition-colors">
                     <ArrowLeft className="w-4 h-4 mr-2" /> VOLVER
                 </Link>
@@ -96,6 +100,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                 </div>
 
             </div>
+
+            {adsStats && <LiveAdsStats data={adsStats} />}
         </main>
     );
 }

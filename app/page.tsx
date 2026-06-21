@@ -6,7 +6,9 @@ import HeroSection from "./components/HeroSection";
 import StatsBar from "./components/StatsBar";
 import ContentHub from "./components/ContentHub";
 import AnimatedSection from "./components/AnimatedSection";
+import LiveAdsStats from "./components/LiveAdsStats";
 import { getWordPressPosts, getSubstackPosts, getYouTubePosts, getInstagramPosts } from "@/lib/content";
+import { getAdsStatsByNiche } from "@/lib/ads";
 
 const SUBSTACK_URL = "https://laempresade1persona.substack.com/";
 
@@ -36,11 +38,12 @@ const services = [
 ];
 
 export default async function Home() {
-  const [wpPosts, substackPosts, ytPosts, igPosts] = await Promise.all([
+  const [wpPosts, substackPosts, ytPosts, igPosts, adsStats] = await Promise.all([
     getWordPressPosts(),
     getSubstackPosts(),
     getYouTubePosts(),
     getInstagramPosts(),
+    getAdsStatsByNiche(),
   ]);
 
   return (
@@ -51,6 +54,9 @@ export default async function Home() {
 
       {/* Stats Bar */}
       <StatsBar />
+
+      {/* Resultados en vivo por nicho (últimos 7 días) */}
+      <LiveAdsStats data={adsStats} />
 
       {/* Content Hub */}
       <ContentHub wpPosts={wpPosts} substackPosts={substackPosts} ytPosts={ytPosts} igPosts={igPosts} />

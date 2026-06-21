@@ -32,6 +32,8 @@ jobs:
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
+          AD_ACCOUNT_NICHES: ${{ secrets.AD_ACCOUNT_NICHES }}
 
       - name: Deploy via FTP to Banahost
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

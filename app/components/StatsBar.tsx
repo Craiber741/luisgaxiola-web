@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useInView } from "framer-motion";
+import AnimatedCounter from "./AnimatedCounter";
 
 const stats = [
   { prefix: "$", value: 45, suffix: "M+", label: "Generados para clientes" },
@@ -9,50 +10,6 @@ const stats = [
   { prefix: "", value: 50, suffix: "+", label: "Clientes atendidos" },
   { prefix: "", value: 3, suffix: "", label: "Ventures activos" },
 ];
-
-function AnimatedCounter({
-  target,
-  prefix,
-  suffix,
-  inView,
-}: {
-  target: number;
-  prefix: string;
-  suffix: string;
-  inView: boolean;
-}) {
-  const [count, setCount] = useState(0);
-  const started = useRef(false);
-
-  useEffect(() => {
-    if (!inView || started.current) return;
-    started.current = true;
-
-    const duration = 1600;
-    const steps = 50;
-    const increment = target / steps;
-    let current = 0;
-    const interval = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(interval);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, duration / steps);
-
-    return () => clearInterval(interval);
-  }, [inView, target]);
-
-  return (
-    <span className="text-4xl md:text-5xl font-black tracking-tighter text-white">
-      {prefix}
-      {count}
-      {suffix}
-    </span>
-  );
-}
 
 export default function StatsBar() {
   const ref = useRef(null);
