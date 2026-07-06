@@ -1,0 +1,565 @@
+/* ==========================================================================
+   Landing Luis Gaxiola — estilos scoped a .landing-root
+   Paleta oscura + un solo color de acento + system font stack.
+   Todo vive bajo .landing-root para NO afectar el resto del sitio (Geist).
+   ========================================================================== */
+
+.landing-root {
+  /* --- Paleta tomada de luisgaxiola.com: negro + blanco + electric blue --- */
+  --lg-bg: #000000;          /* fondo base (bg-black del sitio) */
+  --lg-bg-soft: #121316;     /* fondo de tarjetas/superficies */
+  --lg-border: #24262b;      /* bordes sutiles (≈ white/10) */
+  --lg-text: #ffffff;        /* texto principal */
+  --lg-muted: #9aa0aa;       /* texto secundario (≈ white/60) */
+  --lg-accent: #2563eb;      /* electric blue — acento de marca de Luis Gaxiola */
+  --lg-accent-ink: #ffffff;  /* texto sobre el acento (blanco, como en el sitio) */
+
+  background: var(--lg-bg);
+  color: var(--lg-text);
+  /* System font stack: cero descargas, la carga más rápida en mobile */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.55;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden; /* los marcos offset de las fotos no generan scroll lateral */
+}
+
+/* --- Textura de fondo: glow azul arriba + grid sutil + grano --- */
+.landing-root .lg-texture {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(75% 45% at 50% -8%, color-mix(in srgb, var(--lg-accent) 22%, transparent), transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px) 0 0 / 100% 76px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px) 0 0 / 76px 100%;
+  mask-image: linear-gradient(#000 62%, transparent);
+  -webkit-mask-image: linear-gradient(#000 62%, transparent);
+}
+.landing-root .lg-texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* El contenido va por encima de la textura */
+.landing-root .lg-section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Contenedor central legible en mobile-first */
+.landing-root .lg-container {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Ritmo vertical de secciones */
+.landing-root .lg-section {
+  padding: 64px 0;
+  border-top: 1px solid var(--lg-border);
+}
+.landing-root .lg-section:first-child {
+  border-top: none;
+}
+
+/* Tipografía de apoyo */
+.landing-root .lg-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lg-accent);
+  margin-bottom: 14px;
+}
+.landing-root h1 {
+  font-size: clamp(30px, 8vw, 44px);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px;
+}
+.landing-root h2 {
+  font-size: clamp(24px, 6.5vw, 32px);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 20px;
+}
+.landing-root p {
+  color: var(--lg-muted);
+  font-size: 17px;
+  margin: 0 0 16px;
+}
+.landing-root p strong,
+.landing-root .lg-text strong {
+  color: var(--lg-text);
+  font-weight: 700;
+}
+.landing-root .lg-lead {
+  font-size: 19px;
+  color: var(--lg-text);
+}
+
+/* Botón / CTA */
+.landing-root .lg-cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 17px 24px;
+  background: var(--lg-accent);
+  color: var(--lg-accent-ink);
+  font-size: 17px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 8px 30px -8px color-mix(in srgb, var(--lg-accent) 70%, transparent);
+  animation: lg-cta-pulse 2.8s ease-in-out infinite;
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+/* Brillo que cruza el botón para llamar la atención */
+.landing-root .lg-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: skewX(-18deg);
+  animation: lg-cta-shine 3.4s ease-in-out infinite;
+}
+@keyframes lg-cta-pulse {
+  0%, 100% { box-shadow: 0 8px 30px -8px color-mix(in srgb, var(--lg-accent) 55%, transparent); }
+  50% { box-shadow: 0 10px 42px -6px color-mix(in srgb, var(--lg-accent) 90%, transparent); }
+}
+@keyframes lg-cta-shine {
+  0% { left: -60%; }
+  55%, 100% { left: 130%; }
+}
+.landing-root .lg-cta:hover {
+  filter: brightness(1.06);
+}
+.landing-root .lg-cta:active {
+  transform: translateY(1px);
+}
+
+/* Tarjetas / listas de bullets como bloques de confianza */
+.landing-root .lg-card {
+  background: var(--lg-bg-soft);
+  border: 1px solid var(--lg-border);
+  border-radius: 14px;
+  padding: 20px;
+}
+.landing-root .lg-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.landing-root .lg-list li {
+  background: var(--lg-bg-soft);
+  border: 1px solid var(--lg-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  color: var(--lg-text);
+  font-size: 16px;
+}
+
+/* Marcador visible de placeholders de copy pendiente ([...] de Luis) */
+.landing-root .lg-placeholder {
+  display: inline;
+  color: var(--lg-accent);
+  background: color-mix(in srgb, var(--lg-accent) 12%, transparent);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+/* Precio */
+.landing-root .lg-price {
+  color: var(--lg-text);
+  font-weight: 800;
+}
+
+/* Divisor "no es para ti si" */
+.landing-root .lg-warn {
+  border-left: 3px solid var(--lg-border);
+  padding-left: 16px;
+  margin-top: 24px;
+}
+
+/* FAQ */
+.landing-root .lg-faq-item {
+  border-bottom: 1px solid var(--lg-border);
+  padding: 18px 0;
+}
+.landing-root .lg-faq-item h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--lg-text);
+}
+.landing-root .lg-faq-item p {
+  margin: 0;
+}
+
+/* Quiz — opciones tipo tarjeta */
+.landing-root .lg-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 16px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--lg-text);
+  background: var(--lg-bg);
+  border: 1px solid var(--lg-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.landing-root .lg-option:hover {
+  border-color: var(--lg-accent);
+}
+.landing-root .lg-option[data-active="true"] {
+  border-color: var(--lg-accent);
+  background: color-mix(in srgb, var(--lg-accent) 14%, transparent);
+}
+
+/* Quiz — inputs */
+.landing-root .lg-input {
+  width: 100%;
+  padding: 15px 16px;
+  font-size: 16px; /* 16px evita el zoom automático en iOS */
+  font-weight: 600;
+  color: var(--lg-text);
+  background: var(--lg-bg);
+  border: 1px solid var(--lg-border);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.landing-root .lg-input::placeholder {
+  color: var(--lg-muted);
+  opacity: 0.7;
+}
+.landing-root .lg-input:focus {
+  border-color: var(--lg-accent);
+}
+
+/* Quiz — botón Atrás */
+.landing-root .lg-back {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lg-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.landing-root .lg-back:hover {
+  color: var(--lg-text);
+}
+
+/* Foto de Luis con marco offset azul (mismo lenguaje visual del sitio) */
+.landing-root .lg-photo {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 24px auto 0;
+}
+.landing-root .lg-photo::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--lg-accent);
+  z-index: 0;
+}
+.landing-root .lg-photo img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+}
+.landing-root .lg-photo .lg-badge {
+  position: absolute;
+  bottom: -12px;
+  left: -12px;
+  z-index: 2;
+  background: var(--lg-text);
+  color: var(--lg-bg);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+
+/* Foto in-line (historia / cómo trabajo) */
+.landing-root .lg-inline-photo {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--lg-border);
+  margin-top: 20px;
+  display: block;
+}
+
+/* Barra de métricas reales */
+.landing-root .lg-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px 16px;
+}
+.landing-root .lg-stat-num {
+  font-size: clamp(30px, 9vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--lg-text);
+}
+.landing-root .lg-stat-num span {
+  color: var(--lg-accent);
+}
+.landing-root .lg-stat-label {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--lg-muted);
+  line-height: 1.3;
+}
+
+/* Lista numerada tipo pasos (cards con badge de número) */
+.landing-root .lg-numlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  counter-reset: lgnum;
+}
+.landing-root .lg-numlist li {
+  position: relative;
+  counter-increment: lgnum;
+  background: var(--lg-bg-soft);
+  border: 1px solid var(--lg-border);
+  border-radius: 12px;
+  padding: 16px 18px 16px 58px;
+  color: var(--lg-text);
+  font-size: 16px;
+}
+.landing-root .lg-numlist li::before {
+  content: counter(lgnum);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--lg-accent);
+  color: var(--lg-accent-ink);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* Checklist con palomita en acento */
+.landing-root .lg-check {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.landing-root .lg-check li {
+  position: relative;
+  padding-left: 30px;
+  color: var(--lg-text);
+  font-size: 16px;
+  line-height: 1.4;
+}
+.landing-root .lg-check li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: var(--lg-accent);
+  /* palomita en el color del texto sobre acento */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/14px no-repeat, linear-gradient(#000, #000);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/14px no-repeat;
+}
+
+/* Bloque de comparación: lo malo (✗) vs lo que hago (✓) */
+.landing-root .lg-vs {
+  display: grid;
+  gap: 12px;
+}
+.landing-root .lg-vs .lg-vs-bad,
+.landing-root .lg-vs .lg-vs-good {
+  border-radius: 12px;
+  padding: 16px 18px;
+  border: 1px solid var(--lg-border);
+}
+.landing-root .lg-vs .lg-vs-bad {
+  background: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.28);
+}
+.landing-root .lg-vs .lg-vs-good {
+  background: color-mix(in srgb, var(--lg-accent) 8%, transparent);
+  border-color: color-mix(in srgb, var(--lg-accent) 40%, transparent);
+}
+.landing-root .lg-vs .lg-vs-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.landing-root .lg-vs .lg-vs-bad .lg-vs-tag {
+  color: #f87171;
+}
+.landing-root .lg-vs .lg-vs-good .lg-vs-tag {
+  color: var(--lg-accent);
+}
+.landing-root .lg-vs p {
+  margin: 0;
+  color: var(--lg-text);
+  font-size: 15px;
+}
+
+/* Aviso / advertencia (cómo se cobra) */
+.landing-root .lg-notice {
+  margin-top: 16px;
+  padding: 16px 18px 16px 46px;
+  position: relative;
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.07);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+.landing-root .lg-notice::before {
+  content: "⚠";
+  position: absolute;
+  left: 16px;
+  top: 15px;
+  font-size: 18px;
+  color: #f59e0b;
+}
+.landing-root .lg-notice .lg-notice-title {
+  margin: 0 0 6px;
+  color: #f59e0b;
+  font-weight: 800;
+  font-size: 15px;
+}
+.landing-root .lg-notice p:not(.lg-notice-title) {
+  color: var(--lg-text);
+  font-size: 15px;
+}
+
+/* Divisor de acento corto */
+.landing-root .lg-rule {
+  width: 44px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--lg-accent);
+  margin: 0 0 20px;
+}
+
+/* Sticky CTA en mobile */
+.landing-root .lg-sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--lg-bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--lg-border);
+}
+.landing-root .lg-sticky .lg-cta {
+  max-width: 640px;
+  margin: 0 auto;
+}
+/* Espacio inferior en mobile para que la barra sticky nunca tape contenido */
+@media (max-width: 767px) {
+  .landing-root {
+    padding-bottom: 88px;
+  }
+}
+/* En pantallas grandes no hace falta el sticky */
+@media (min-width: 768px) {
+  .landing-root .lg-sticky {
+    display: none;
+  }
+}
+
+/* Animación de aparición al entrar en viewport.
+   Se activa solo con JS (clase .lg-anim en el root) → sin JS nada queda oculto. */
+.landing-root.lg-anim .lg-section {
+  opacity: 0;
+  transform: translateY(22px);
+}
+.landing-root.lg-anim .lg-section.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* Escalonado suave dentro de la sección visible */
+.landing-root.lg-anim .lg-section.is-in > * > * {
+  animation: lg-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes lg-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Reduce motion: nada de movimiento y todo visible */
+@media (prefers-reduced-motion: reduce) {
+  .landing-root *,
+  .landing-root .lg-cta,
+  .landing-root .lg-cta::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .landing-root.lg-anim .lg-section {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

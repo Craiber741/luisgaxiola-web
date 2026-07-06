@@ -1,8 +1,8 @@
 "use client";
 import Script from "next/script";
 
-// TODO: Reemplaza con tu Pixel ID de Meta Ads Manager
-const PIXEL_ID = "PIXEL_ID_AQUI";
+// Pixel de Meta de Luis Gaxiola.
+const PIXEL_ID = "1332956858393579";
 
 export function MetaPixel() {
   return (
@@ -23,14 +23,27 @@ export function MetaPixel() {
   );
 }
 
+export const META_PIXEL_ID = PIXEL_ID;
+
 declare global {
   interface Window {
     fbq: (...args: unknown[]) => void;
   }
 }
 
-export function trackEvent(event: string, data?: Record<string, unknown>) {
+// Eventos ESTÁNDAR de Meta (PageView, Lead, Purchase, etc.)
+// eventId permite deduplicar contra el mismo evento enviado por CAPI (server-side).
+export function trackEvent(event: string, data?: Record<string, unknown>, eventId?: string) {
   if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("track", event, data);
+    if (eventId) window.fbq("track", event, data, { eventID: eventId });
+    else window.fbq("track", event, data);
+  }
+}
+
+// Eventos PERSONALIZADOS del funnel (scroll_*, quiz_step_*, whatsapp_redirect, HotLead, etc.)
+export function trackCustom(event: string, data?: Record<string, unknown>, eventId?: string) {
+  if (typeof window !== "undefined" && window.fbq) {
+    if (eventId) window.fbq("trackCustom", event, data, { eventID: eventId });
+    else window.fbq("trackCustom", event, data);
   }
 }
