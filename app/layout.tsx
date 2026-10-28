@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import SiteWrapper from "./components/SiteWrapper";
 import { MetaPixel } from "./components/MetaPixel";
@@ -9,14 +9,21 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const serif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Luis Gaxiola | Entrepreneur & Media Buyer",
-  description: "Builder de Chawoora y Craiber. +$45M generados en ventas. Estrategias de marketing que no publico en redes — solo en mi newsletter.",
+  title: "Luis Gaxiola | Media Buyer · Newsletters y asesoría 1 a 1",
+  description: "Media buyer con +$4M USD invertidos en ads. Dos newsletters gratuitas y asesoría 1 a 1 por aplicación para dueños que ya invierten en publicidad.",
 };
 
 export default function RootLayout({
@@ -26,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${serif.variable}`}>
         <MetaPixel />
         <SiteWrapper>
           {children}

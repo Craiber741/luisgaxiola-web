@@ -6,7 +6,8 @@ const STANDALONE_ROUTES = ["/webs", "/web2", "/demos", "/servicios/media-buying"
 
 export default function SiteWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isStandalone = STANDALONE_ROUTES.some((r) => pathname.startsWith(r));
+  // La home trae su propio header/footer.
+  const isStandalone = pathname === "/" || STANDALONE_ROUTES.some((r) => pathname.startsWith(r));
 
   return (
     <>

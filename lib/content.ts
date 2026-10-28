@@ -163,13 +163,16 @@ export async function getWordPressPosts(): Promise<ContentPost[]> {
   }
 }
 
-export async function getSubstackPosts(): Promise<ContentPost[]> {
+export async function getSubstackPosts(
+  baseUrl = "https://laempresade1persona.substack.com",
+  fallback: ContentPost[] = FALLBACK_SUBSTACK
+): Promise<ContentPost[]> {
   try {
-    const res = await fetch("https://laempresade1persona.substack.com/feed", FETCH_OPTS);
-    if (!res.ok) return FALLBACK_SUBSTACK;
+    const res = await fetch(`${baseUrl}/feed`, FETCH_OPTS);
+    if (!res.ok) return fallback;
     const xml = await res.text();
     const items = parseRssItems(xml, 3);
-    if (!items.length) return FALLBACK_SUBSTACK;
+    if (!items.length) return fallback;
     return items.map((item) => {
       const rawDesc = stripHtml(item.description);
       return {
@@ -182,7 +185,7 @@ export async function getSubstackPosts(): Promise<ContentPost[]> {
       };
     });
   } catch {
-    return FALLBACK_SUBSTACK;
+    return fallback;
   }
 }
 
