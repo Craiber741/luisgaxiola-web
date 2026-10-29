@@ -43,7 +43,7 @@ export default async function Home() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-[#0B0B0C]/85 backdrop-blur border-b border-white/10">
         <nav className="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-          <a href="#" className="font-serif text-2xl tracking-tight">Luis Gaxiola</a>
+          <a href="#" className="font-semibold text-lg tracking-tight">Luis Gaxiola</a>
           <div className="flex items-center gap-8 text-xs uppercase tracking-[0.2em]">
             <a href="#newsletters" className="hidden md:inline text-white/60 hover:text-white transition-colors">Newsletters</a>
             <a href="#asesoria" className="hidden md:inline text-white/60 hover:text-white transition-colors">Asesoría</a>
@@ -58,8 +58,8 @@ export default async function Home() {
         <section className="max-w-6xl mx-auto px-4 md:px-8 pt-16 md:pt-28 pb-20 md:pb-32 grid md:grid-cols-[1.4fr_1fr] gap-12 md:gap-20 items-end">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-white/50 mb-10">Media buyer · Guadalajara, MX</p>
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl leading-[0.95] tracking-tight mb-10">
-              Lo que aprendí invirtiendo <em className="text-[#FF5C00]">+$4M USD</em> en anuncios.
+            <h1 className="font-semibold text-5xl sm:text-6xl md:text-8xl leading-[1] tracking-[-0.04em] mb-10">
+              Lo que aprendí invirtiendo <span className="text-[#FF5C00]">+$4M USD</span> en anuncios.
             </h1>
             <p className="text-lg md:text-xl text-white/70 max-w-xl leading-relaxed mb-12">
               Lo escribo en dos newsletters gratuitas. Y con pocos dueños de negocio a la vez lo trabajo uno a uno,
@@ -94,7 +94,7 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto px-4 md:px-8 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
             {proof.map((p) => (
               <div key={p.label} className="py-10 sm:px-8 sm:first:pl-0">
-                <p className="font-serif text-5xl md:text-6xl mb-2">{p.value}</p>
+                <p className="font-semibold tracking-tight text-5xl md:text-6xl mb-2">{p.value}</p>
                 <p className="text-sm text-white/50">{p.label}</p>
               </div>
             ))}
@@ -104,14 +104,14 @@ export default async function Home() {
         {/* Newsletters */}
         <section id="newsletters" className="max-w-6xl mx-auto px-4 md:px-8 py-24 md:py-36 scroll-mt-16">
           <p className="text-xs uppercase tracking-[0.3em] text-[#FF5C00] mb-6">01 · Newsletters</p>
-          <h2 className="font-serif text-4xl md:text-6xl leading-tight max-w-3xl mb-16 md:mb-24">
+          <h2 className="font-semibold tracking-tight text-4xl md:text-6xl leading-tight max-w-3xl mb-16 md:mb-24">
             Escribo para dos tipos de lector. Las dos son gratis.
           </h2>
           <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10">
             {newsletters.map((n, i) => (
               <article key={n.name} className="bg-[#0B0B0C] p-8 md:p-12 flex flex-col min-w-0">
-                <h3 className="font-serif text-3xl md:text-4xl mb-4">{n.name}</h3>
-                <p className="font-serif italic text-xl text-white/80 mb-6">“{n.hook}”</p>
+                <h3 className="font-semibold tracking-tight text-3xl md:text-4xl mb-4">{n.name}</h3>
+                <p className="text-lg text-white/80 mb-6">“{n.hook}”</p>
                 <p className="text-white/60 leading-relaxed mb-10">{n.body}</p>
 
                 {posts[i].length > 0 && (
@@ -142,7 +142,7 @@ export default async function Home() {
         <section id="asesoria" className="bg-[#121214] border-y border-white/10 scroll-mt-16">
           <div className="max-w-6xl mx-auto px-4 md:px-8 py-24 md:py-36">
             <p className="text-xs uppercase tracking-[0.3em] text-[#FF5C00] mb-6">02 · Asesoría 1 a 1</p>
-            <h2 className="font-serif text-4xl md:text-6xl leading-tight max-w-4xl mb-10">
+            <h2 className="font-semibold tracking-tight text-4xl md:text-6xl leading-tight max-w-4xl mb-10">
               Para dueños que ya invierten en publicidad y quieren decidir con criterio propio.
             </h2>
             <p className="text-lg text-white/70 max-w-2xl leading-relaxed mb-20">
@@ -153,8 +153,8 @@ export default async function Home() {
             <div className="grid md:grid-cols-3 gap-px bg-white/10 border border-white/10 mb-20">
               {pasos.map((p) => (
                 <div key={p.n} className="bg-[#121214] p-8 md:p-10">
-                  <p className="font-serif text-[#FF5C00] text-2xl mb-6">{p.n}</p>
-                  <h3 className="font-serif text-3xl mb-3">{p.title}</h3>
+                  <p className="font-semibold tracking-tight text-[#FF5C00] text-2xl mb-6">{p.n}</p>
+                  <h3 className="font-semibold tracking-tight text-3xl mb-3">{p.title}</h3>
                   <p className="text-white/60 leading-relaxed">{p.desc}</p>
                 </div>
               ))}
@@ -178,7 +178,7 @@ export default async function Home() {
                 </div>
               </div>
               <div id="aplicar" className="scroll-mt-24 border border-white/10 p-8 md:p-10 bg-[#0B0B0C]">
-                <h3 className="font-serif text-3xl mb-2">Aplica</h3>
+                <h3 className="font-semibold tracking-tight text-3xl mb-2">Aplica</h3>
                 <p className="text-sm text-white/50 mb-8">Trabajo con pocos dueños a la vez. Leo cada aplicación.</p>
                 <AsesoriaForm />
               </div>
@@ -199,7 +199,7 @@ export default async function Home() {
           />
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-[#FF5C00] mb-6">03 · Sobre mí</p>
-            <h2 className="font-serif text-4xl md:text-5xl leading-tight mb-8">Soy Luis Gaxiola.</h2>
+            <h2 className="font-semibold tracking-tight text-4xl md:text-5xl leading-tight mb-8">Soy Luis Gaxiola.</h2>
             <div className="space-y-5 text-lg text-white/70 leading-relaxed">
               <p>
                 Nací en Mexicali y vivo en Guadalajara. Llevo más de siete años comprando anuncios para negocios en
@@ -218,9 +218,9 @@ export default async function Home() {
         {/* Cierre */}
         <section className="border-t border-white/10">
           <div className="max-w-6xl mx-auto px-4 md:px-8 py-24 md:py-32 text-center">
-            <h2 className="font-serif text-4xl md:text-6xl leading-tight mb-12">
+            <h2 className="font-semibold tracking-tight text-4xl md:text-6xl leading-tight mb-12">
               Empieza por leer.<br />
-              <em className="text-white/60">Si después quieres hablar, aplica.</em>
+              <span className="text-white/50">Si después quieres hablar, aplica.</span>
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="#newsletters" className="inline-flex items-center justify-center gap-3 bg-[#EDE9E3] text-[#0B0B0C] px-8 py-4 text-sm uppercase tracking-[0.2em] hover:bg-[#FF5C00] hover:text-white transition-colors">
