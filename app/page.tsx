@@ -130,14 +130,8 @@ export default async function Home() {
                   </div>
                 )}
 
-                <form action={`${n.url}/api/v1/free?nojs=true`} method="post" target="_blank" className="mt-auto flex border border-white/20 focus-within:border-[#FF5C00] transition-colors">
-                  <input type="email" name="email" required placeholder="tu@correo.com" aria-label={`Correo para ${n.name}`} className="flex-1 min-w-0 bg-transparent px-4 py-4 text-sm placeholder:text-white/30 focus:outline-none" />
-                  <button type="submit" className="px-5 text-xs uppercase tracking-[0.2em] bg-[#EDE9E3] text-[#0B0B0C] hover:bg-[#FF5C00] hover:text-white transition-colors">
-                    Suscribirme
-                  </button>
-                </form>
-                <a href={n.url} target="_blank" rel="noopener noreferrer" className="mt-4 text-xs text-white/40 hover:text-white/70">
-                  Ver el archivo completo →
+                <a href={n.url} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center justify-center gap-3 bg-[#EDE9E3] text-[#0B0B0C] px-8 py-4 text-sm uppercase tracking-[0.2em] hover:bg-[#FF5C00] hover:text-white transition-colors">
+                  Suscribirme gratis <ArrowUpRight className="w-4 h-4" />
                 </a>
               </article>
             ))}
