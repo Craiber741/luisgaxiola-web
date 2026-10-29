@@ -1,6 +1,6 @@
 "use client";
 
-import "../easy/landing.css";
+import "./landing.css";
 import { useCallback, useEffect, useState } from "react";
 import { getSupabase, isSupabaseConfigured } from "../../lib/supabase";
 import { sendCrmEvent, STAGES, STAGE_LABEL, type Stage } from "../../lib/crm";

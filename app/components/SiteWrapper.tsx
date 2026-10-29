@@ -1,26 +1,16 @@
 "use client";
 import { usePathname } from "next/navigation";
-import Navbar from "./Navbar";
-
-const STANDALONE_ROUTES = ["/webs", "/web2", "/demos", "/servicios/media-buying", "/easy", "/admin"];
+import { SiteHeader, SiteFooter } from "./site";
 
 export default function SiteWrapper({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  // La home trae su propio header/footer.
-  const isStandalone = pathname === "/" || STANDALONE_ROUTES.some((r) => pathname.startsWith(r));
+  // /admin es el panel interno de leads: va sin header ni footer.
+  if (usePathname().startsWith("/admin")) return <>{children}</>;
 
   return (
     <>
-      {!isStandalone && <Navbar />}
+      <SiteHeader />
       {children}
-      {!isStandalone && (
-        <footer className="py-8 border-t border-gray-100 mt-auto">
-          <div className="container mx-auto px-4 text-center text-sm text-gray-500">
-            <p>&copy; {new Date().getFullYear()} Luis Gaxiola. Todos los derechos reservados.</p>
-            <p className="mt-2 text-xs">Diseñado para la dominación del mercado.</p>
-          </div>
-        </footer>
-      )}
+      <SiteFooter />
     </>
   );
 }

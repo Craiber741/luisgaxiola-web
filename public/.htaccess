@@ -11,6 +11,14 @@ Options -Indexes
 
 RewriteEngine On
 
+# Landings retiradas (oct-2026): el sitio quedó en newsletters + asesoría 1 a 1.
+# Van antes de servir archivos para ganarle a HTML viejo que quede en el servidor.
+RewriteRule ^demos/(privacidad|terminos)(\.html|/)?$ /privacidad [R=301,L]
+RewriteRule ^servicios/(consultoria|mentoria)(\.html|/)?$ /asesoria [R=301,L]
+RewriteRule ^servicios(\.html|/)?$ /asesoria [R=301,L]
+RewriteRule ^(easy|web|webs|web2|servicios/media-buying)(\.html|/)?$ https://craiber.com/ [R=301,L]
+RewriteRule ^demos(/.*)?$ https://craiber.com/ [R=301,L]
+
 # Serve existing files directly (CSS, JS, images, etc.)
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]

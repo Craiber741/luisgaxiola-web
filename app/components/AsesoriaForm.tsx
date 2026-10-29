@@ -2,13 +2,15 @@
 
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { WHATSAPP_NUMBER } from "@/lib/quiz-config";
 import { trackEvent } from "./MetaPixel";
+
+// WhatsApp de Luis (código de país, sin +).
+const WHATSAPP_NUMBER = "523347605936";
 
 const INVERSION = ["Menos de $1,000 USD", "$1,000 – $5,000 USD", "$5,000 – $10,000 USD", "Más de $10,000 USD"];
 
 const field =
-  "w-full bg-transparent border-b border-white/20 py-3 text-[#EDE9E3] placeholder:text-white/30 focus:border-[#FF5C00] focus:outline-none transition-colors";
+  "w-full bg-transparent border-b border-white/20 py-3 text-ink placeholder:text-white/30 focus:border-accent focus:outline-none transition-colors";
 
 export default function AsesoriaForm() {
   const [nombre, setNombre] = useState("");
@@ -38,7 +40,7 @@ export default function AsesoriaForm() {
       </label>
       <label className="flex flex-col gap-1">
         <span className="text-xs uppercase tracking-[0.2em] text-white/50">Inversión mensual en ads</span>
-        <select required value={inversion} onChange={(e) => setInversion(e.target.value)} className={`${field} [&>option]:bg-[#0B0B0C]`}>
+        <select required value={inversion} onChange={(e) => setInversion(e.target.value)} className={`${field} [&>option]:bg-coal`}>
           <option value="" disabled>Selecciona</option>
           {INVERSION.map((o) => (
             <option key={o}>{o}</option>
@@ -51,7 +53,7 @@ export default function AsesoriaForm() {
       </label>
       <button
         type="submit"
-        className="mt-4 inline-flex items-center justify-center gap-3 bg-[#EDE9E3] text-[#0B0B0C] px-8 py-4 text-sm uppercase tracking-[0.2em] hover:bg-[#FF5C00] hover:text-white transition-colors"
+        className="mt-4 inline-flex items-center justify-center gap-3 bg-ink text-coal px-8 py-4 text-sm uppercase tracking-[0.2em] hover:bg-accent hover:text-white transition-colors"
       >
         Enviar aplicación <ArrowRight className="w-4 h-4" />
       </button>
